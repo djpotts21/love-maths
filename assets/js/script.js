@@ -29,29 +29,33 @@ function runGame(gameType){
     let num2 = Math.floor(Math.random() * 25) + 1;
 
     if (gameType === "addition"){
-        displayAdditionQuestion(num1, num2)
+        displayAdditionQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aboerting!`;
     }
 
 }
+
 /**
  * Checks the answer against the first element in 
  * the returned calculateCorrectAnswer array
  */
 function checkAnswer(){
-    let userAnswer = parseInt(document.getElementById("answer-box").value)
-    let calculatedAnswer = calculateCorrectAnswer()
-    let isCorrect = userAnswer === calculatedAnswer[0]
+    let userAnswer = parseInt(document.getElementById("answer-box").value);
+    let calculatedAnswer = calculateCorrectAnswer();
+    let isCorrect = userAnswer === calculatedAnswer[0];
 
     if (isCorrect){
-        alert("Hey! You got it right! :D")
+        alert("Hey! You got it right! :D");
+        incrementScore();
     } else{
-        alert(`Awww..... you answered ${userAnswer}. The correct answer is ${calculatedAnswer[0]}!`)
+        alert(`Awww..... you answered ${userAnswer}. The correct answer is ${calculatedAnswer[0]}!`);
+        incrementWrongAnswer();
     }
-    runGame(calculatedAnswer[1])
+    runGame(calculatedAnswer[1]);
 }
+
 /**
  * Gets the operands (the numbers) and the operator (plus, minus etc)
  * directly from the dom, and returns the correct number.
@@ -74,10 +78,25 @@ function calculateCorrectAnswer(){
     }
 
 }
+
+/**
+ * Gets current score from the DOM and increments by 1
+ */
 function incrementScore(){
 
+    let oldScore = parseInt(document.getElementById("score").innerText);
+    document.getElementById("score").innerText = ++oldScore;
+
 }
+
+/**
+ * Gets current incorrect answer score from the DOM and increments by 1
+ */
 function incrementWrongAnswer(){
+    
+    let oldWrongAnswer = parseInt(document.getElementById("incorrect").innerText);
+    document.getElementById("incorrect").innerText = ++oldWrongAnswer;
+    
 
 }
 function displayAdditionQuestion(operand1, operand2){
