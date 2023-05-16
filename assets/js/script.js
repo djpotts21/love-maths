@@ -5,16 +5,28 @@ document.addEventListener("DOMContentLoaded", function(){
     let buttons = document.getElementsByTagName("button");
 
     for (let button of buttons){
-        button.addEventListener("click", function(){
-            if (this.getAttribute("data-type") === "submit"){
-                checkAnswer();
-            } else {
-                let gameType = this.getAttribute("data-type")
-                runGame(gameType)
-            }
+        button.addEventListener("click", function()
+        {
+            if (this.getAttribute("data-type") === "submit")
+                {
+                    checkAnswer();
+                } 
+            else 
+                {
+                    let gameType = this.getAttribute("data-type")
+                    runGame(gameType)
+                }
         })
     }
 
+    document.getElementById("answer-box").addEventListener("keydown", function(event)
+        {
+                if (event.key === "Enter")
+                    {
+                        checkAnswer();
+                    }
+        })
+        
     runGame("addition");
 
 })
@@ -24,6 +36,10 @@ document.addEventListener("DOMContentLoaded", function(){
  * and after the user's answer has been processed
  */
 function runGame(gameType){
+
+    document.getElementById("answer-box").value = "";
+    document.getElementById("answer-box").focus();
+
     //Creates two random numbers between 1 and 25
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
@@ -36,7 +52,7 @@ function runGame(gameType){
         {
             displayMultiplyQuestion(num1, num2);
         }
-        else if (gameType === "subtract")
+    else if (gameType === "subtract")
         {
             displaySubtractQuestion(num1, num2);
         }
@@ -53,17 +69,21 @@ function runGame(gameType){
  * the returned calculateCorrectAnswer array
  */
 function checkAnswer(){
+
     let userAnswer = parseInt(document.getElementById("answer-box").value);
     let calculatedAnswer = calculateCorrectAnswer();
     let isCorrect = userAnswer === calculatedAnswer[0];
 
-    if (isCorrect){
-        alert("Hey! You got it right! :D");
-        incrementScore();
-    } else{
-        alert(`Awww..... you answered ${userAnswer}. The correct answer is ${calculatedAnswer[0]}!`);
-        incrementWrongAnswer();
-    }
+    if (isCorrect)
+        {
+            alert("Hey! You got it right! :D");
+            incrementScore();
+        } 
+    else
+        {
+            alert(`Awww..... you answered ${userAnswer}. The correct answer is ${calculatedAnswer[0]}!`);
+            incrementWrongAnswer();
+        }
     runGame(calculatedAnswer[1]);
 }
 
@@ -86,9 +106,9 @@ function calculateCorrectAnswer(){
             return [operand1 * operand2, "multiply"];
         }
     else if (operator === "-")
-    {
-            return [operand1 - operand2, "subtract"];
-    }    
+        {
+                return [operand1 - operand2, "subtract"];
+        }    
     else 
         {
             alert(`Unimpleneted operator ${operator}`);
